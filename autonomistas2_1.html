@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Autonomistas · Asesoría</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0B1929;--card:rgba(255,255,255,.05);--border:rgba(255,255,255,.1);--txt:#F0EDE8;--dim:#8899AA;--gold:#E8A020;--blue:#4A7FA5;--green:#1E7B34;--red:#C0392B;--purple:#9B59B6}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+.ser{font-family:'DM Serif Display',serif}
+h1,h2,h3{font-family:'DM Serif Display',serif}
+/* layout */
+.screen{display:none;flex-direction:column;min-height:100vh}
+.screen.on{display:flex}
+/* cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px}
+/* buttons */
+button{cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--txt);padding:7px 15px;border-radius:5px;font-size:11px;font-weight:600;letter-spacing:.04em;transition:all .15s}
+.btn:hover{background:rgba(255,255,255,.08)}
+.btn.on{background:var(--gold);border-color:var(--gold);color:#0B1929}
+.btn-gold{background:var(--gold);border:none;color:#0B1929;padding:10px 22px;border-radius:6px;font-weight:700;font-size:13px}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--dim);padding:8px 16px;border-radius:5px;font-size:12px}
+.btn-del{background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.3);color:#E57373;width:28px;height:28px;border-radius:4px;font-size:16px;flex-shrink:0}
+.btn-add{background:rgba(232,160,32,.08);border:1px dashed rgba(232,160,32,.4);color:var(--gold);padding:9px;border-radius:6px;font-size:12px;width:100%;margin-top:8px;display:block;text-align:center}
+.chip{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 9px;border-radius:3px}
+/* form */
+.inp{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:var(--txt);padding:9px 12px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;outline:none}
+.inp:focus{border-color:var(--gold)}
+.inp::placeholder{color:#5A6B7A}
+select.inp{cursor:pointer;background:#152233}
+.lbl{display:block;font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
+/* grids */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+/* nav bar */
+.topbar{padding:11px 22px;border-bottom:1px solid var(--border);background:rgba(11,25,41,.98);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99}
+.logo{width:28px;height:28px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display';font-size:12px;font-weight:bold;color:#0B1929}
+/* main scroll */
+.scroll{flex:1;overflow-y:auto;padding:24px 22px}
+/* bar */
+.bar-wrap{background:rgba(255,255,255,.07);border-radius:4px;height:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .6s ease}
+/* form tabs */
+.ftab-btn{background:transparent;border:1px solid rgba(255,255,255,.12);color:var(--dim);padding:7px 15px;border-radius:20px;font-size:12px;transition:all .18s;white-space:nowrap}
+.ftab-btn.on{background:rgba(232,160,32,.15);border-color:var(--gold);color:var(--gold);font-weight:600}
+.ftab-pane{display:none} .ftab-pane.on{display:block}
+/* asesoria sections */
+.asec{display:none;max-width:960px;margin:0 auto}
+.asec.on{display:block;animation:fd .3s ease}
+@keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* misc */
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:rgba(255,255,255,.15);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold);cursor:pointer}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:2px}
+.dot-nav{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.2);cursor:pointer;transition:all .25s}
+.dot-nav.on{width:20px;background:var(--gold)}
+@media(max-width:680px){.g2,.g3,.g4{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ===================== FORMULARIO ===================== -->
+<div id="S-form" class="screen on">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="logo">A</div>
+      <div>
+        <div style="font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase">Autonomistas</div>
+        <div style="font-size:13px;font-family:'DM Serif Display'">Coach Financiero</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-ghost" onclick="loadDemo()">Cargar demo</button>
+      <button class="btn-gold" onclick="irAsesoria()">Ver asesoría →</button>
+    </div>
+  </div>
+
+  <!-- form tab strip -->
+  <div style="padding:10px 22px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid var(--border);background:rgba(11,25,41,.6)">
+    <button class="ftab-btn on" onclick="showFtab(0,this)">👤 Cliente</button>
+    <button class="ftab-btn" onclick="showFtab(1,this)">💰 Ingresos</button>
+    <button class="ftab-btn" onclick="showFtab(2,this)">📊 Gastos</button>
+    <button class="ftab-btn" onclick="showFtab(3,this)">💳 Deudas</button>
+    <button class="ftab-btn" onclick="showFtab(4,this)">✨ Sueños</button>
+  </div>
+
+  <div class="scroll" style="max-width:820px">
+
+    <!-- PANE 0: CLIENTE -->
+    <div id="fp0" class="ftab-pane on">
+      <h2 style="font-size:22px;margin-bottom:4px">Información del cliente</h2>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:20px">Datos básicos para personalizar la asesoría</p>
+      <div class="g2" style="margin-bottom:14px">
+        <div><label class="lbl">Nombre</label><input class="inp" id="f-nom" placeholder="Carolina &amp; Andrés"/></div>
+        <div><label class="lbl">Ciudad</label><input class="inp" id="f-ciu" placeholder="Bogotá"/></div>
+      </div>
+      <div class="g2" style="margin-bottom:14px">
+        <div><label class="lbl">Edades</label><input class="inp" id="f-eda" placeholder="36 &amp; 40 años"/></div>
+        <div><label class="lbl">Tipo de sesión</label><input class="inp" id="f-ses" placeholder="Sesión inicial"/></div>
+      </div>
+      <div class="g2" style="margin-bottom:16px">
+        <div>
+          <label class="lbl">Ahorros existentes ($M)</label>
+          <input class="inp" type="number" step="0.5" id="f-ahx" value="0"/>
+          <div style="font-size:11px;color:var(--dim);margin-top:4px">Dinero que ya tenían antes</div>
+        </div>
+        <div>
+          <label class="lbl">Pago / ingreso reciente ($M)</label>
+          <input class="inp" type="number" step="0.5" id="f-par" value="0"/>
+          <div style="font-size:11px;color:var(--dim);margin-top:4px">El que acaba de llegar</div>
+        </div>
+      </div>
+      <div class="g2" style="margin-bottom:14px">
+        <div>
+          <label class="lbl">Cesantías ($M)</label>
+          <input class="inp" type="number" step="0.5" id="f-ces" value="0"/>
+          <div style="font-size:11px;color:var(--dim);margin-top:4px">Cesantías acumuladas — posible abono a deuda o hipoteca</div>
+        </div>
+        <div>
+          <label class="lbl">Seguros actuales</label>
+          <select class="inp" id="f-seg">
+            <option value="ninguno">Sin seguros significativos</option>
+            <option value="basico">Seguro de vida básico</option>
+            <option value="completo">Vida + salud + otros</option>
+          </select>
+          <div style="font-size:11px;color:var(--dim);margin-top:4px">Para evaluar el nivel de protección del hogar</div>
+        </div>
+      </div>
+      <div>
+        <label class="lbl">Perfil crediticio</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn on" id="pf-ex" onclick="selPerf('excelente',this)">Excelente</button>
+          <button class="btn" id="pf-bu" onclick="selPerf('bueno',this)">Bueno</button>
+          <button class="btn" id="pf-me" onclick="selPerf('medio',this)">Medio</button>
+          <button class="btn" id="pf-re" onclick="selPerf('regular',this)">Regular</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANE 1: INGRESOS -->
+    <div id="fp1" class="ftab-pane">
+      <h2 style="font-size:22px;margin-bottom:4px">Ingresos del hogar</h2>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:20px">Define el fijo y el variable para los tres escenarios</p>
+      <div style="padding:14px;background:rgba(74,127,165,.08);border:1px solid rgba(74,127,165,.25);border-radius:8px;margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:10px">📌 Ingreso fijo</div>
+        <div class="g3">
+          <div><label class="lbl">Nombre</label><input class="inp" id="f-fq" placeholder="Carolina"/></div>
+          <div><label class="lbl">Neto mensual ($M)</label><input class="inp" type="number" step="0.5" id="f-fv" value="0"/></div>
+          <div><label class="lbl">Descripción</label><input class="inp" id="f-fd" placeholder="Gerente de marca"/></div>
+        </div>
+      </div>
+      <div style="padding:14px;background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.2);border-radius:8px;margin-bottom:16px">
+        <div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:10px">📊 Ingreso variable</div>
+        <div class="g2" style="margin-bottom:12px">
+          <div><label class="lbl">Nombre</label><input class="inp" id="f-vq" placeholder="Andrés"/></div>
+          <div><label class="lbl">Descripción</label><input class="inp" id="f-vd" placeholder="Arquitecto independiente"/></div>
+        </div>
+        <div class="g3">
+          <div><label class="lbl">Mes malo ($M)</label><input class="inp" type="number" step="0.5" id="f-vm" value="0"/></div>
+          <div><label class="lbl">Mes normal ($M)</label><input class="inp" type="number" step="0.5" id="f-vn" value="0"/></div>
+          <div><label class="lbl">Mes bueno ($M)</label><input class="inp" type="number" step="0.5" id="f-vb" value="0"/></div>
+        </div>
+      </div>
+      <div style="padding:14px;background:rgba(30,123,52,.06);border:1px solid rgba(30,123,52,.2);border-radius:8px">
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px">🎁 Extras anuales (primas, bonos)</div>
+        <div style="max-width:220px"><label class="lbl">Total año ($M)</label><input class="inp" type="number" step="0.5" id="f-pr" value="0"/></div>
+      </div>
+    </div>
+
+    <!-- PANE 2: GASTOS -->
+    <div id="fp2" class="ftab-pane">
+      <h2 style="font-size:22px;margin-bottom:4px">Gastos mensuales</h2>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:20px">Clasifica como necesidad, deseo o ahorro</p>
+      <div id="gastos-wrap"></div>
+      <button class="btn-add" onclick="addGasto()">+ Agregar gasto</button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px">
+        <div style="padding:14px;background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.22);border-radius:8px">
+          <div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:8px">✈️ Viaje anual</div>
+          <label class="lbl">Costo total del viaje ($M)</label>
+          <input class="inp" type="number" step="0.5" id="f-via" value="0" oninput="calcViaje()"/>
+          <div id="viaje-hint" style="font-size:12px;color:var(--gold);margin-top:6px"></div>
+        </div>
+        <div style="padding:14px;background:rgba(30,123,52,.06);border:1px solid rgba(30,123,52,.22);border-radius:8px">
+          <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px">💰 Meta de ahorro mensual</div>
+          <label class="lbl">¿Cuánto quieren ahorrar/mes? ($M)</label>
+          <input class="inp" type="number" step="0.25" id="f-mah" value="0" oninput="calcAhorro()"/>
+          <div id="ahorro-hint" style="font-size:12px;color:var(--green);margin-top:6px"></div>
+        </div>
+      </div>
+      <div id="total-gastos-box" style="margin-top:12px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:6px">
+        <span style="font-size:12px;color:var(--dim)">Total mensual: </span>
+        <span id="total-gastos-val" style="font-size:16px;color:var(--gold);font-family:'DM Serif Display'">$0M</span>
+      </div>
+    </div>
+
+    <!-- PANE 3: DEUDAS -->
+    <div id="fp3" class="ftab-pane">
+      <h2 style="font-size:22px;margin-bottom:4px">Deudas actuales</h2>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:20px">Se ordenarán por tasa para la bola de nieve automáticamente</p>
+      <div id="deudas-wrap"></div>
+      <button class="btn-add" onclick="addDeuda()">+ Agregar deuda</button>
+      <div style="margin-top:12px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:6px">
+        <span style="font-size:12px;color:var(--dim)">Deuda total: </span>
+        <span id="total-deuda-val" style="font-size:16px;color:var(--red);font-family:'DM Serif Display'">$0M</span>
+      </div>
+    </div>
+
+    <!-- PANE 4: SUEÑOS -->
+    <div id="fp4" class="ftab-pane">
+      <h2 style="font-size:22px;margin-bottom:4px">Sueños y metas de vida</h2>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:20px">Lo más importante. ¿Para qué sirven los números?</p>
+      <div id="suenos-wrap"></div>
+      <button class="btn-add" onclick="addSueno()">+ Agregar sueño o meta</button>
+    </div>
+
+  </div><!-- /scroll -->
+</div><!-- /S-form -->
+
+<!-- ===================== ASESORÍA ===================== -->
+<div id="S-ase" class="screen">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="logo">A</div>
+      <div id="ase-nombre" style="font-size:13px;font-family:'DM Serif Display'"></div>
+    </div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap" id="ase-nav"></div>
+    <button class="btn-ghost" onclick="irForm()">✏ Editar</button>
+  </div>
+
+  <div class="scroll" id="ase-scroll">
+    <div id="a0" class="asec on"></div>
+    <div id="a1" class="asec"></div>
+    <div id="a2" class="asec"></div>
+    <div id="a3" class="asec"></div>
+    <div id="a4" class="asec"></div>
+    <div id="a5" class="asec"></div>
+    <div id="a6" class="asec"></div>
+    <div id="a7" class="asec"></div>
+    <div id="a8" class="asec"></div>
+    <div id="a9" class="asec"></div>
+    <div id="a10" class="asec"></div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 22px;border-top:1px solid var(--border);background:rgba(11,25,41,.98)">
+    <button class="btn" onclick="navSec(-1)">← Anterior</button>
+    <div style="display:flex;gap:5px" id="ase-dots"></div>
+    <button class="btn" onclick="navSec(1)">Siguiente →</button>
+  </div>
+</div><!-- /S-ase -->
+
+<script>
+// ───── STATE ─────────────────────────────────────────────────────
+var DATA = {
+  nombre:'', ciudad:'', edades:'', sesion:'',
+  ahx:0, par:0, via:0, mah:0,
+  fijo:{q:'',v:0,d:''}, var:{q:'',malo:0,norm:0,bueno:0,d:''}, prima:0,
+  gastos:[], deudas:[], suenos:[], perf:'excelente'
+};
+var curSec = 0;
+var GASTOS = [], DEUDAS = [], SUENOS = [];
+var DCOLS = ['#C0392B','#E8A020','#4A7FA5','#9B59B6','#1E7B34','#E67E22'];
+var BANCOS = {
+  excelente:[{b:'Bancolombia',t:14.5,p:60,l:'🟡'},{b:'Davivienda',t:15.2,p:60,l:'🔴'},{b:'Banco de Bogotá',t:15.8,p:48,l:'🔵'},{b:'BBVA Colombia',t:16.4,p:60,l:'🔷'},{b:'Itaú',t:17.0,p:48,l:'🟠'}],
+  bueno:[{b:'Bancolombia',t:19.5,p:48,l:'🟡'},{b:'Davivienda',t:20.8,p:48,l:'🔴'},{b:'Scotiabank',t:21.5,p:36,l:'🟥'},{b:'Banco de Bogotá',t:22.0,p:36,l:'🔵'},{b:'Finandina',t:23.5,p:36,l:'🟢'}],
+  medio:[{b:'Scotiabank',t:25.5,p:36,l:'🟥'},{b:'Falabella',t:26.8,p:36,l:'🟤'},{b:'Finandina',t:27.5,p:24,l:'🟢'},{b:'Bancamía',t:28.0,p:24,l:'⚫'},{b:'Nequi',t:28.5,p:24,l:'🟣'}],
+  regular:[{b:'Cooperativas',t:28.5,p:36,l:'🤝'},{b:'Libranzas',t:25.0,p:48,l:'📄'},{b:'Adelantos nómina',t:30.0,p:12,l:'📋'},{b:'Bancamía',t:31.5,p:24,l:'⚫'}]
+};
+var ETFS = [
+  {n:'S&P 500 (VOO/IVV)',t:'Renta variable EEUU',r:10,ri:'Moderado-Alto',d:'Las 500 empresas más grandes de EEUU. ~10% EA histórico en 30 años.',donde:'Tyba, plataformas internacionales',c:'#1E7B34'},
+  {n:'COLFCAP ETF',t:'Renta variable Colombia',r:8,ri:'Alto',d:'Principales empresas colombianas. Sin riesgo cambiario.',donde:'Bolsa de Valores Colombia',c:'#4A7FA5'},
+  {n:'FIC Renta Variable',t:'Fondo colectivo',r:9,ri:'Moderado',d:'Fondo administrado en acciones. Más fácil de acceder en Colombia.',donde:'Skandia, Credicorp Capital',c:'#9B59B6'},
+  {n:'CDT / Renta Fija',t:'Renta fija',r:10.5,ri:'Bajo',d:'CDTs al 10–11% EA actualmente. Sin riesgo de mercado.',donde:'Cualquier banco · Tyba',c:'#E8A020'},
+  {n:'FVP (Pensión Voluntaria)',t:'Pensión voluntaria',r:9,ri:'Moderado',d:'Deduce hasta 30% del impuesto de renta. Muy eficiente para empleados formales.',donde:'Porvenir, Skandia, Protección',c:'#E67E22'}
+];
+var SECLABELS = ['Inicio','Flujo','Diagnóstico','Opciones','Bola de Nieve','Compra Cartera','+ Opciones','Protección','Presupuesto','Inversiones','El Plan'];
+
+// ───── UTILS ─────────────────────────────────────────────────────
+function fm(n){
+  var v = parseFloat(n)||0;
+  return '$' + (v%1===0 ? v : v.toFixed(1)) + 'M';
+}
+function gv(id){ return parseFloat(document.getElementById(id).value)||0; }
+function sv(id){ return document.getElementById(id).value||''; }
+function el(id){ return document.getElementById(id); }
+
+// ───── FORM TABS ─────────────────────────────────────────────────
+function showFtab(i, btn){
+  document.querySelectorAll('.ftab-pane').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.ftab-btn').forEach(function(b){b.classList.remove('on');});
+  el('fp'+i).classList.add('on');
+  btn.classList.add('on');
+}
+function selPerf(k, btn){
+  DATA.perf = k;
+  ['ex','bu','me','re'].forEach(function(x){ el('pf-'+x).classList.remove('on'); });
+  btn.classList.add('on');
+}
+
+// ───── GASTOS ────────────────────────────────────────────────────
+function renderGastos(){
+  var html = '';
+  GASTOS.forEach(function(g, i){
+    html += '<div style="display:grid;grid-template-columns:1fr 90px 130px 32px;gap:10px;align-items:end;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px">';
+    html += '<div><label class="lbl">Descripción</label><input class="inp" value="'+g.n+'" onchange="GASTOS['+i+'].n=this.value" placeholder="Ej: Mercado"/></div>';
+    html += '<div><label class="lbl">Valor ($M)</label><input class="inp" type="number" step="0.05" value="'+g.v+'" onchange="GASTOS['+i+'].v=parseFloat(this.value)||0;updTotGastos()"/></div>';
+    html += '<div><label class="lbl">Categoría</label><select class="inp" onchange="GASTOS['+i+'].t=this.value">';
+    html += '<option value="necesidad"'+(g.t==='necesidad'?' selected':'')+'>🏠 Necesidad</option>';
+    html += '<option value="deseo"'+(g.t==='deseo'?' selected':'')+'>🎯 Deseo</option>';
+    html += '<option value="ahorro"'+(g.t==='ahorro'?' selected':'')+'>💰 Ahorro</option>';
+    html += '</select></div>';
+    html += '<button class="btn-del" onclick="GASTOS.splice('+i+',1);renderGastos()">×</button>';
+    html += '</div>';
+  });
+  el('gastos-wrap').innerHTML = html;
+  updTotGastos();
+}
+function addGasto(g){
+  GASTOS.push(g||{n:'',v:0,t:'necesidad'});
+  renderGastos();
+}
+function updTotGastos(){
+  var tot = GASTOS.reduce(function(s,g){return s+g.v;},0);
+  tot += (gv('f-via')/12) + gv('f-mah');
+  el('total-gastos-val').textContent = fm(tot.toFixed(2));
+}
+function calcViaje(){
+  var v = gv('f-via');
+  el('viaje-hint').textContent = v>0 ? '→ Ahorrar '+fm((v/12).toFixed(2))+'/mes para llegar sin tarjeta' : '';
+  updTotGastos();
+}
+function calcAhorro(){
+  var v = gv('f-mah');
+  el('ahorro-hint').textContent = v>0 ? '→ Al año: '+fm((v*12).toFixed(1))+' ahorrados' : '';
+  updTotGastos();
+}
+
+// ───── DEUDAS ────────────────────────────────────────────────────
+function renderDeudas(){
+  var html = '';
+  DEUDAS.forEach(function(d, i){
+    html += '<div style="border-left:3px solid '+d.c+';background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px">';
+    html += '<div class="g4" style="align-items:end;gap:10px">';
+    html += '<div><label class="lbl">Nombre</label><input class="inp" value="'+d.n+'" onchange="DEUDAS['+i+'].n=this.value" placeholder="Tarjeta visa"/></div>';
+    html += '<div><label class="lbl">Saldo ($M)</label><input class="inp" type="number" step="0.5" value="'+d.saldo+'" onchange="DEUDAS['+i+'].saldo=parseFloat(this.value)||0;updTotDeudas()"/></div>';
+    html += '<div><label class="lbl">Tasa EA (%)</label><input class="inp" type="number" step="0.5" value="'+d.tasa+'" onchange="DEUDAS['+i+'].tasa=parseFloat(this.value)||0"/></div>';
+    html += '<div style="display:flex;gap:8px;align-items:flex-end"><div style="flex:1"><label class="lbl">Cuota mín ($M)</label><input class="inp" type="number" step="0.05" value="'+d.cuota+'" onchange="DEUDAS['+i+'].cuota=parseFloat(this.value)||0"/></div>';
+    html += '<button class="btn-del" onclick="DEUDAS.splice('+i+',1);renderDeudas()">×</button></div>';
+    html += '</div></div>';
+  });
+  el('deudas-wrap').innerHTML = html;
+  updTotDeudas();
+}
+function addDeuda(d){
+  DEUDAS.push(d||{n:'',saldo:0,tasa:0,cuota:0,c:DCOLS[DEUDAS.length%DCOLS.length]});
+  renderDeudas();
+}
+function updTotDeudas(){
+  var tot = DEUDAS.reduce(function(s,d){return s+d.saldo;},0);
+  el('total-deuda-val').textContent = fm(tot.toFixed(1));
+}
+
+// ───── SUEÑOS ────────────────────────────────────────────────────
+function renderSuenos(){
+  var html = '';
+  SUENOS.forEach(function(s, i){
+    html += '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(232,160,32,.2);border-radius:8px;padding:12px;margin-bottom:8px">';
+    html += '<div class="g4" style="gap:10px;align-items:end;margin-bottom:10px">';
+    html += '<div><label class="lbl">Ícono</label><input class="inp" value="'+s.icono+'" onchange="SUENOS['+i+'].icono=this.value" placeholder="🎯"/></div>';
+    html += '<div><label class="lbl">¿Quién?</label><input class="inp" value="'+s.quien+'" onchange="SUENOS['+i+'].quien=this.value"/></div>';
+    html += '<div style="grid-column:span 2;display:flex;gap:8px;align-items:flex-end"><div style="flex:2"><label class="lbl">El sueño</label><input class="inp" value="'+s.desc+'" onchange="SUENOS['+i+'].desc=this.value" placeholder="Ej: Casa propia"/></div>';
+    html += '<button class="btn-del" onclick="SUENOS.splice('+i+',1);renderSuenos()">×</button></div>';
+    html += '</div>';
+    html += '<div class="g2" style="gap:10px">';
+    html += '<div><label class="lbl">Meta ($M)</label><input class="inp" type="number" step="5" value="'+s.costo+'" onchange="SUENOS['+i+'].costo=parseFloat(this.value)||0"/></div>';
+    html += '<div><label class="lbl">Horizonte (años)</label><input class="inp" type="number" step="1" value="'+s.anos+'" onchange="SUENOS['+i+'].anos=parseInt(this.value)||0"/></div>';
+    html += '</div></div>';
+  });
+  el('suenos-wrap').innerHTML = html;
+}
+function addSueno(s){
+  SUENOS.push(s||{icono:'🎯',quien:'',desc:'',costo:0,anos:10});
+  renderSuenos();
+}
+
+// ───── DEMO ──────────────────────────────────────────────────────
+function loadDemo(){
+  el('f-nom').value='Carolina & Andrés';
+  el('f-ciu').value='Bogotá';
+  el('f-eda').value='36 & 40 años';
+  el('f-ses').value='Sesión inicial';
+  el('f-ahx').value=20;
+  el('f-par').value=35;
+  el('f-fq').value='Carolina';
+  el('f-fv').value=11;
+  el('f-fd').value='Gerente de marca';
+  el('f-vq').value='Andrés';
+  el('f-vd').value='Arquitecto independiente';
+  el('f-vm').value=2;
+  el('f-vn').value=8;
+  el('f-vb').value=15;
+  el('f-pr').value=22;
+  el('f-via').value=9;
+  el('f-mah').value=1;
+  selPerf('bueno', el('pf-bu'));
+  el('pf-ex').classList.remove('on');
+  el('f-ces').value=18;
+  el('f-seg').value='basico';
+  GASTOS=[];
+  [{n:'Hipoteca',v:3.2,t:'necesidad'},{n:'Cuota carro',v:1.3,t:'necesidad'},{n:'Colegio (2 niños)',v:2.8,t:'necesidad'},{n:'Mercado',v:2.2,t:'necesidad'},{n:'Empleada doméstica',v:1.0,t:'necesidad'},{n:'Servicios e internet',v:0.7,t:'necesidad'},{n:'Gasolina y peajes',v:0.65,t:'necesidad'},{n:'Seguros',v:0.4,t:'necesidad'},{n:'Actividades niños',v:0.5,t:'necesidad'},{n:'Streaming + gimnasio',v:0.35,t:'deseo'},{n:'Restaurantes y planes',v:1.5,t:'deseo'},{n:'Ropa, regalos, varios',v:1.5,t:'deseo'}]
+  .forEach(function(g){GASTOS.push(g);});
+  renderGastos();
+  DEUDAS=[];
+  [{n:'Tarjeta de crédito',saldo:15,tasa:30,cuota:0.65,c:'#C0392B'},{n:'Crédito vehículo',saldo:26,tasa:21,cuota:1.3,c:'#E8A020'},{n:'Hipoteca',saldo:305,tasa:12,cuota:3.2,c:'#4A7FA5'}]
+  .forEach(function(d){DEUDAS.push(d);});
+  renderDeudas();
+  SUENOS=[];
+  [{icono:'🏢',quien:'Andrés',desc:'Estudio propio de arquitectura',costo:80,anos:5},{icono:'🎓',quien:'Familia',desc:'Universidad de los hijos',costo:120,anos:13},{icono:'🌎',quien:'Carolina',desc:'Retiro cómodo',costo:500,anos:22}]
+  .forEach(function(s){SUENOS.push(s);});
+  renderSuenos();
+  calcViaje(); calcAhorro();
+}
+
+// ───── COLLECT ───────────────────────────────────────────────────
+function collectData(){
+  DATA.nombre = sv('f-nom')||'Cliente';
+  DATA.ciudad = sv('f-ciu');
+  DATA.edades = sv('f-eda');
+  DATA.sesion = sv('f-ses')||'Sesión inicial';
+  DATA.ahx = gv('f-ahx');
+  DATA.par = gv('f-par');
+  DATA.via = gv('f-via');
+  DATA.mah = gv('f-mah');
+  DATA.fijo.q = sv('f-fq')||'Persona 1';
+  DATA.fijo.v = gv('f-fv');
+  DATA.fijo.d = sv('f-fd');
+  DATA.var.q = sv('f-vq')||'Persona 2';
+  DATA.var.malo = gv('f-vm');
+  DATA.var.norm = gv('f-vn');
+  DATA.var.bueno = gv('f-vb');
+  DATA.var.d = sv('f-vd');
+  DATA.prima = gv('f-pr');
+  DATA.gastos = GASTOS.slice();
+  DATA.cesantias = parseFloat(el('f-ces').value)||0;
+  DATA.seguros = el('f-seg').value||'ninguno';
+  DATA.deudas = DEUDAS.slice().sort(function(a,b){return b.tasa-a.tasa;});
+  DATA.suenos = SUENOS.slice();
+}
+
+// ───── NAVIGATE ASESORÍA ────────────────────────────────────────
+function irAsesoria(){
+  collectData();
+  buildAll();
+  el('S-form').classList.remove('on');
+  el('S-ase').classList.add('on');
+  curSec=0;
+  showSec(0);
+  el('ase-nombre').textContent = DATA.nombre;
+}
+function irForm(){
+  el('S-ase').classList.remove('on');
+  el('S-form').classList.add('on');
+}
+function navSec(d){
+  var n = curSec+d;
+  if(n>=0 && n<=10) showSec(n);
+}
+function showSec(i){
+  document.querySelectorAll('.asec').forEach(function(s){s.classList.remove('on');s.classList.remove('fade');});
+  el('a'+i).classList.add('on');
+  curSec = i;
+  document.querySelectorAll('.dot-nav').forEach(function(d,j){
+    d.classList.toggle('on', j===i);
+  });
+  document.querySelectorAll('.nav-btn').forEach(function(b,j){
+    b.classList.toggle('on', j===i);
+  });
+  el('ase-scroll').scrollTop = 0;
+}
+
+// ───── MATH ─────────────────────────────────────────────────────
+function simBola(deudas, excBase){
+  if(!deudas.length) return [];
+  var s = deudas.map(function(d){return {n:d.n,tasa:d.tasa,cuota:d.cuota,sa:d.saldo};});
+  var exc=excBase, idx=0, hist=[];
+  for(var m=1;m<=120;m++){
+    for(var i=idx+1;i<s.length;i++){
+      if(s[i].sa>0){var int=s[i].sa*(s[i].tasa/100/12);s[i].sa=Math.max(0,s[i].sa+int-s[i].cuota);}
+    }
+    if(idx<s.length && s[idx].sa>0){
+      var int2=s[idx].sa*(s[idx].tasa/100/12);
+      s[idx].sa=Math.max(0,s[idx].sa+int2-(exc+s[idx].cuota));
+      if(s[idx].sa===0 && idx<s.length-1){exc+=s[idx].cuota;idx++;}
+    }
+    hist.push({m:m,obj:idx<s.length?s[idx].n:'¡Libre!'});
+    if(s.every(function(x){return x.sa===0;})) break;
+  }
+  return hist;
+}
+function proyInv(cap,ap,tasa,meses){
+  var tm=tasa/100/12,a=cap,out=[{m:0,v:cap}];
+  for(var m=1;m<=meses;m++){a=a*(1+tm)+ap;if(m%12===0||m===meses)out.push({m:m,v:+a.toFixed(1)});}
+  return out;
+}
+
+// ───── BUILD ALL SECTIONS ───────────────────────────────────────
+function buildAll(){
+  var D = DATA;
+  var dd = D.deudas;
+  var dM = dd[0]||{n:'',saldo:0,tasa:0,cuota:0,c:'#C0392B'};
+  var vM = D.via/12;
+  var gTot = D.gastos.reduce(function(s,g){return s+g.v;},0)+vM;
+  var gNec = D.gastos.filter(function(g){return g.t==='necesidad';}).reduce(function(s,g){return s+g.v;},0);
+  var gDes = D.gastos.filter(function(g){return g.t==='deseo';}).reduce(function(s,g){return s+g.v;},0)+vM;
+  var gAh  = D.gastos.filter(function(g){return g.t==='ahorro';}).reduce(function(s,g){return s+g.v;},0)+D.mah;
+  var ingAvg = D.fijo.v + D.var.norm;
+  var liq = D.ahx + D.par;
+  var n50=ingAvg*.5, n30=ingAvg*.3, n20=ingAvg*.2;
+
+  // Build each section separately
+  buildSec0(D, dd, dM, liq, gTot, ingAvg);
+  buildSec1(D, dd, dM, gTot, gNec, gDes, gAh, vM, ingAvg);
+  buildSec2(D, dd, dM);
+  buildSec3(D, dM, gNec);
+  buildSec4(D, dd, dM);
+  buildSec5(D, dd);
+  buildSec6(D, dd, dM);
+  buildSec7(D);
+  buildSec8(D, dM, dd, gTot, gNec, gDes, gAh, vM, ingAvg, n50, n30, n20);
+  buildSec9();
+  buildSec10(D, dd, dM);
+
+  // Build nav
+  var navHtml='', dotsHtml='';
+  SECLABELS.forEach(function(l,i){
+    navHtml += '<button class="btn nav-btn'+(i===0?' on':'')+'" onclick="showSec('+i+')">'+l+'</button>';
+    dotsHtml += '<div class="dot-nav'+(i===0?' on':'')+'" onclick="showSec('+i+')"></div>';
+  });
+  el('ase-nav').innerHTML = navHtml;
+  el('ase-dots').innerHTML = dotsHtml;
+}
+
+function buildSec0(D, dd, dM, liq, gTot, ingAvg){
+  var intMes = (dM.saldo*dM.tasa/100/12).toFixed(2);
+  var h = '';
+  h += '<span class="chip" style="background:rgba(232,160,32,.15);color:var(--gold);border:1px solid rgba(232,160,32,.3);margin-bottom:12px;display:inline-block">'+D.sesion+' · '+D.ciudad+'</span>';
+  h += '<h1 class="ser" style="font-size:40px;line-height:1.1;margin-bottom:10px">Hola, <em style="color:var(--gold)">'+D.nombre+'</em>.<br/>Hablemos de su dinero.</h1>';
+  h += '<p style="font-size:14px;color:var(--dim);line-height:1.7;max-width:500px;margin-bottom:24px">Hoy vamos a entender a dónde va cada peso, eliminar lo que más cuesta y trazar el camino hacia sus sueños.</p>';
+  h += '<div class="g4" style="margin-bottom:18px">';
+  var stats=[{l:'Ingreso promedio',v:fm(ingAvg),s:'mensual estimado',c:'#1E7B34'},{l:'Capital disponible',v:fm(liq),s:fm(D.ahx)+' prev + '+fm(D.par)+' nuevo',c:'var(--gold)'},{l:'Deuda total',v:fm(dd.reduce(function(s,d){return s+d.saldo;},0)),s:'todas las obligaciones',c:'var(--dim)'},{l:'Deuda más cara',v:fm(dM.saldo),s:'al '+dM.tasa+'% EA ⚠',c:'var(--red)'}];
+  stats.forEach(function(st){
+    h += '<div class="card" style="text-align:center"><div class="ser" style="font-size:26px;color:'+st.c+';line-height:1">'+st.v+'</div><div style="font-size:10px;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:.05em">'+st.l+'</div><div style="font-size:10px;color:var(--dim);margin-top:2px">'+st.s+'</div></div>';
+  });
+  h += '</div>';
+  h += '<div class="g2">';
+  h += '<div class="card" style="border-left:3px solid var(--red);padding-left:16px"><div style="font-size:11px;font-weight:700;color:#E57373;margin-bottom:5px">⚠ El nudo que hay que resolver</div><p style="font-size:13px;line-height:1.6;color:var(--dim)">La deuda al '+dM.tasa+'% EA consume '+fm(intMes)+' solo en intereses cada mes. Mientras exista, invertir no tiene sentido.</p></div>';
+  h += '<div class="card" style="border-left:3px solid var(--green);padding-left:16px"><div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:5px">✅ La oportunidad real</div><p style="font-size:13px;line-height:1.6;color:var(--dim)">Con '+fm(D.par)+' tomando decisiones inteligentes hoy, pueden transformar su situación financiera en menos de 36 meses.</p></div>';
+  h += '</div>';
+  el('a0').innerHTML = h;
+}
+
+function buildSec1(D, dd, dM, gTot, gNec, gDes, gAh, vM, ingAvg){
+  var h = '';
+  h += '<h2 style="font-size:28px;margin-bottom:5px">Flujo mensual del hogar</h2>';
+  h += '<p style="color:var(--dim);margin-bottom:16px;font-size:13px">Cambia el escenario para ver el impacto real</p>';
+  h += '<div style="display:flex;gap:8px;margin-bottom:18px">';
+  [{k:'malo',l:'Mes malo ('+fm(D.var.malo)+')',c:'var(--red)'},{k:'normal',l:'Normal ('+fm(D.var.norm)+')',c:'var(--gold)'},{k:'bueno',l:'Bueno ('+fm(D.var.bueno)+')',c:'var(--green)'}].forEach(function(o){
+    h += '<button class="btn'+(o.k==='normal'?' on':'')+'" id="mb-'+o.k+'" onclick="switchMes(\''+o.k+'\',\''+o.c+'\')">'+o.l+'</button>';
+  });
+  h += '</div>';
+  h += '<div id="flujo-inner">'+flujoHTML(D, gTot, gNec, gDes, gAh, vM, 'normal')+'</div>';
+  el('a1').innerHTML = h;
+}
+
+function flujoHTML(D, gTot, gNec, gDes, gAh, vM, mode){
+  var ing = mode==='bueno'?D.fijo.v+D.var.bueno:(mode==='malo'?D.fijo.v+D.var.malo:D.fijo.v+D.var.norm);
+  var marg = ing - gTot;
+  var margC = marg<0?'var(--red)':marg<2?'var(--gold)':'var(--green)';
+  var h = '<div class="g2">';
+  // gastos bar
+  h += '<div class="card">';
+  h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Gastos · <span class="ser" style="color:var(--txt);font-size:13px">'+fm(gTot)+'</span> mensual</div>';
+  var allG = D.gastos.slice();
+  if(D.via>0) allG.push({n:'✈️ Fondo viaje',v:+(vM.toFixed(2)),t:'deseo'});
+  if(D.mah>0) allG.push({n:'💰 Ahorro programado',v:D.mah,t:'ahorro'});
+  allG.forEach(function(g){
+    var p = gTot>0?(g.v/gTot*100):0;
+    var bc = g.t==='necesidad'?'var(--blue)':g.t==='ahorro'?'var(--green)':'var(--gold)';
+    h += '<div style="margin-bottom:7px">';
+    h += '<div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="font-size:11px">'+g.n+'</span><span style="font-size:11px;color:var(--dim)">'+fm(g.v)+'</span></div>';
+    h += '<div class="bar-wrap"><div class="bar-fill" style="width:'+Math.min(100,p)+'%;background:'+bc+'"></div></div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  // right column
+  h += '<div style="display:flex;flex-direction:column;gap:12px">';
+  h += '<div class="card"><div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:5px">Ingreso total</div>';
+  h += '<div class="ser" style="font-size:34px;color:'+margC+'">'+fm(ing)+'</div>';
+  h += '<div style="font-size:11px;color:var(--dim);margin-top:2px">'+D.fijo.q+' '+fm(D.fijo.v)+' + '+D.var.q+' variable</div></div>';
+  var margBg = marg<0?'rgba(192,57,43,.14)':marg<2?'rgba(232,160,32,.09)':'rgba(30,123,52,.09)';
+  var margBd = marg<0?'rgba(192,57,43,.4)':marg<2?'rgba(232,160,32,.3)':'rgba(30,123,52,.3)';
+  h += '<div class="card" style="background:'+margBg+';border-color:'+margBd+'">';
+  h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:5px">Margen real</div>';
+  h += '<div class="ser" style="font-size:34px;color:'+margC+'">'+(marg<0?'-':'+')+fm(Math.abs(marg))+'</div>';
+  h += '<div style="font-size:12px;margin-top:3px;color:'+(marg<0?'#E57373':'var(--dim)')+'">'+(marg<0?'⚠ Déficit — entra a deuda':marg<2?'Casi sin margen':'Mes positivo')+'</div></div>';
+  h += '<div class="card"><div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:8px">Por categoría</div>';
+  [{l:'Necesidades',v:gNec,c:'var(--blue)'},{l:'Deseos + viaje',v:gDes,c:'var(--gold)'},{l:'Ahorro programado',v:gAh,c:'var(--green)'}].forEach(function(ct){
+    h += '<div style="display:flex;justify-content:space-between;margin-bottom:5px"><div style="display:flex;align-items:center;gap:7px"><div style="width:8px;height:8px;border-radius:2px;background:'+ct.c+'"></div><span style="font-size:12px">'+ct.l+'</span></div><span class="ser" style="font-size:12px;color:'+ct.c+'">'+fm(ct.v)+'</span></div>';
+  });
+  h += '</div></div></div>';
+  return h;
+}
+
+function switchMes(k,c){
+  ['malo','normal','bueno'].forEach(function(m){
+    var b=el('mb-'+m); if(!b) return;
+    b.classList.remove('on'); b.style.background=''; b.style.borderColor=''; b.style.color='';
+  });
+  var btn = el('mb-'+k); if(!btn) return;
+  btn.classList.add('on'); btn.style.background=c; btn.style.borderColor=c; btn.style.color='#fff';
+  var D=DATA;
+  var vM=D.via/12;
+  var gTot=D.gastos.reduce(function(s,g){return s+g.v;},0)+vM;
+  var gNec=D.gastos.filter(function(g){return g.t==='necesidad';}).reduce(function(s,g){return s+g.v;},0);
+  var gDes=D.gastos.filter(function(g){return g.t==='deseo';}).reduce(function(s,g){return s+g.v;},0)+vM;
+  var gAh=D.gastos.filter(function(g){return g.t==='ahorro';}).reduce(function(s,g){return s+g.v;},0)+D.mah;
+  el('flujo-inner').innerHTML = flujoHTML(D,gTot,gNec,gDes,gAh,vM,k);
+}
+
+function buildSec2(D, dd, dM){
+  var h='';
+  h += '<h2 style="font-size:28px;margin-bottom:5px">Diagnóstico real</h2>';
+  h += '<p style="color:var(--dim);margin-bottom:18px;font-size:13px">El dinero no desaparece — hay razones exactas. Aquí están.</p>';
+  h += '<div class="g2" style="margin-bottom:16px">';
+  // Problema financiero
+  var iMes = (dM.saldo*dM.tasa/100/12).toFixed(2);
+  h += '<div style="background:rgba(192,57,43,.07);border:1px solid rgba(192,57,43,.3);border-radius:8px;padding:18px">';
+  h += '<span class="chip" style="background:rgba(192,57,43,.2);color:#E57373;margin-bottom:12px;display:inline-block">Problema financiero urgente</span>';
+  h += '<h3 style="font-size:18px;margin-bottom:10px;color:#E57373">La deuda más cara: '+dM.n+'</h3>';
+  h += '<div class="g2" style="margin-bottom:12px">';
+  [{l:'Saldo',v:fm(dM.saldo)},{l:'Tasa',v:dM.tasa+'% EA'},{l:'Cuota mín.',v:fm(dM.cuota)},{l:'Intereses/mes',v:fm(iMes)}].forEach(function(x){
+    h += '<div style="background:rgba(0,0,0,.2);border-radius:5px;padding:7px 10px"><div class="ser" style="font-size:18px;color:#E57373">'+x.v+'</div><div style="font-size:9px;color:var(--dim);text-transform:uppercase">'+x.l+'</div></div>';
+  });
+  h += '</div>';
+  h += '<p style="font-size:12px;line-height:1.6;color:#F5C6C6;background:rgba(192,57,43,.1);padding:10px;border-radius:5px">Invertir mientras se paga el '+dM.tasa+'% EA es como llenar una bañera con el tapón abierto.</p></div>';
+  // Causa de raíz
+  h += '<div style="background:rgba(91,58,138,.07);border:1px solid rgba(91,58,138,.3);border-radius:8px;padding:18px">';
+  h += '<span class="chip" style="background:rgba(91,58,138,.2);color:#B39DDB;margin-bottom:12px;display:inline-block">Causa de raíz</span>';
+  h += '<h3 style="font-size:18px;margin-bottom:10px;color:#B39DDB">Sin visibilidad compartida</h3>';
+  ['Sin un presupuesto claro, los gastos crecen sin control.','Los ingresos variables sin buffer generan deuda en los meses malos.','El dinero extra llega y se va sin rastro — el patrón se repite.'].forEach(function(t){
+    h += '<div style="display:flex;gap:8px;margin-bottom:10px"><span style="color:#B39DDB;font-size:12px;flex-shrink:0">→</span><p style="font-size:12px;line-height:1.5;color:var(--dim)">'+t+'</p></div>';
+  });
+  h += '<p style="font-size:12px;color:#D1C4E9;background:rgba(91,58,138,.15);border-radius:5px;padding:10px;border-left:3px solid #B39DDB;margin-top:4px">El dinero es la #1 causa de conflicto en parejas. La solución: una reunión mensual donde todos ven los mismos números.</p></div>';
+  h += '</div>';
+  // Mapa de deudas
+  h += '<div class="card">';
+  h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Mapa de deudas — costo real en intereses por mes</div>';
+  dd.forEach(function(d){
+    var intD = fm((d.saldo*d.tasa/100/12).toFixed(2));
+    h += '<div style="display:grid;grid-template-columns:160px 65px 65px 1fr 95px;gap:10px;align-items:center;padding:7px 5px">';
+    h += '<span style="font-size:12px">'+d.n+'</span>';
+    h += '<span class="ser" style="font-size:12px;color:var(--dim)">'+fm(d.saldo)+'</span>';
+    h += '<span class="ser" style="font-size:13px;color:'+d.c+'">'+d.tasa+'% EA</span>';
+    h += '<div class="bar-wrap"><div class="bar-fill" style="width:'+(d.tasa/40*100)+'%;background:'+d.c+'"></div></div>';
+    h += '<span class="chip" style="background:'+d.c+'22;color:'+d.c+';border:1px solid '+d.c+'44;text-align:center">'+intD+'/mes</span>';
+    h += '</div>';
+  });
+  h += '</div>';
+  el('a2').innerHTML = h;
+}
+
+function buildSec3(D, dM, gNec){
+  var h='';
+  h += '<h2 style="font-size:28px;margin-bottom:5px">¿Qué hacemos con '+fm(D.par)+'?</h2>';
+  h += '<p style="color:var(--dim);margin-bottom:18px;font-size:13px">Tres caminos posibles. Las consecuencias son muy diferentes.</p>';
+  h += '<div class="g3" style="margin-bottom:18px">';
+  [{t:'❌ Sin plan (lo que ha pasado)',c:'var(--red)',pts:['Queda en cuenta sin destino','Gastos incrementales sin nombre','La deuda al '+dM.tasa+'% sigue creciendo','En 12 meses no queda nada'],r:'Resultado: $0 patrimonio + más deuda'},
+   {t:'⚠ Invertir sin ordenar primero',c:'var(--gold)',pts:['CDT al ~10% EA','Deuda al '+dM.tasa+'% sigue activa','Gana $2M, paga $4.5M en intereses','El costo supera el rendimiento'],r:'Resultado: pérdida neta real ~$2.5M'},
+   {t:'✅ La ruta inteligente',c:'var(--green)',pts:['Pagar la deuda más cara primero','Fondo de emergencia real','Buffer para meses variables','Semilla de inversión activa ya'],r:'Resultado: base sólida + inversión creciendo'}]
+  .forEach(function(op){
+    h += '<div style="background:'+op.c.replace('var(--','rgba(').replace(')',',.09)')+';border:1px solid '+op.c.replace('var(--','rgba(').replace(')',',0.3)')+';border-radius:8px;padding:16px;display:flex;flex-direction:column">';
+    h += '<div style="font-size:13px;font-weight:700;margin-bottom:12px;line-height:1.3">'+op.t+'</div>';
+    op.pts.forEach(function(p){h+='<div style="display:flex;gap:7px;margin-bottom:7px"><span style="color:'+op.c+';font-size:11px;flex-shrink:0">→</span><p style="font-size:11px;color:var(--dim);line-height:1.5">'+p+'</p></div>';});
+    h += '<div style="margin-top:auto;padding:10px;background:rgba(255,255,255,.06);border-radius:5px;border-top:2px solid rgba(255,255,255,.15)"><p style="font-size:12px;font-weight:700;color:var(--txt)">'+op.r+'</p></div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  // Distribución
+  var resto = D.par - (dM.saldo<=D.par?dM.saldo:0);
+  var fonEm = Math.max(0, Math.min(gNec*5-D.ahx, resto*.55));
+  var buf = Math.min(5, D.par*.14);
+  var sem = Math.max(0, D.par-(dM.saldo<=D.par?dM.saldo:0)-fonEm-buf);
+  var asig = [];
+  if(dM.saldo>0 && dM.saldo<=D.par) asig.push({n:'Pagar '+dM.n,v:dM.saldo,c:dM.c,d:'Elimina el '+dM.tasa+'% EA'});
+  if(fonEm>0) asig.push({n:'Fondo emergencia',v:+fonEm.toFixed(1),c:'var(--blue)',d:'Suma a '+fm(D.ahx)+' → ~5 meses'});
+  if(buf>0) asig.push({n:'Buffer flujo variable',v:+buf.toFixed(1),c:'var(--gold)',d:'Para meses malos'});
+  if(sem>0) asig.push({n:'Semilla inversión',v:+sem.toFixed(1),c:'var(--green)',d:'Empieza a trabajar ya'});
+  h += '<div class="card" style="border-top:2px solid var(--gold)">';
+  h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Distribución recomendada de '+fm(D.par)+'</div>';
+  h += '<div style="display:grid;grid-template-columns:repeat('+asig.length+',1fr);gap:10px">';
+  asig.forEach(function(a){
+    h += '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:12px;text-align:center">';
+    h += '<div class="ser" style="font-size:20px;color:'+a.c+'">'+fm(a.v)+'</div>';
+    h += '<div style="font-size:11px;color:var(--txt);margin:4px 0;line-height:1.3">'+a.n+'</div>';
+    h += '<div style="font-size:10px;color:var(--dim);line-height:1.3">'+a.d+'</div></div>';
+  });
+  h += '</div></div>';
+  el('a3').innerHTML = h;
+}
+
+function buildSec4(D, dd, dM){
+  var dPost = dd.slice(1);
+  var excBase = dM.cuota||0;
+  var bn = simBola(dPost, excBase);
+  var mesLibre = bn.length>0?bn[bn.length-1].m:0;
+  var h='';
+  h += '<h2 style="font-size:28px;margin-bottom:5px">El efecto bola de nieve ❄️</h2>';
+  h += '<p style="color:var(--dim);margin-bottom:18px;font-size:13px">Cada deuda pagada libera su cuota para atacar la siguiente.</p>';
+  h += '<div class="g2">';
+  // Left
+  h += '<div>';
+  h += '<div class="card" style="margin-bottom:14px">';
+  h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Orden de ataque — mayor tasa primero</div>';
+  dd.forEach(function(d,i){
+    h += '<div style="display:flex;gap:10px;margin-bottom:10px;padding:10px;background:'+(i===0?'rgba(30,123,52,.08)':'rgba(255,255,255,.03)')+';border-radius:6px;border-left:3px solid '+(i===0?'var(--green)':d.c)+'">';
+    h += '<div style="width:22px;height:22px;border-radius:50%;background:'+(i===0?'var(--green)':d.c)+';display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:11px;font-weight:700;color:#fff">'+(i===0?'✓':i+1)+'</span></div>';
+    h += '<div><div style="font-size:12px;font-weight:600;color:'+(i===0?'var(--green)':'var(--txt)')+';margin-bottom:2px">'+d.n+' — '+d.tasa+'% EA</div>';
+    h += '<div style="font-size:11px;color:var(--dim)">'+(i===0?'Atacar con '+fm(D.par)+' disponibles — eliminar YA':'Cuota '+fm(d.cuota)+'/mes + liberado de deudas anteriores')+'</div></div></div>';
+  });
+  h += '</div>';
+  h += '<div class="card">';
+  h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:8px">Simula: ¿y si destinan más?</div>';
+  h += '<div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;color:var(--dim)">Excedente extra mensual</span><span id="xtra-lbl" class="ser" style="font-size:15px;color:var(--gold)">$0M</span></div>';
+  h += '<input type="range" min="0" max="3" step="0.25" value="0" oninput="updXtra(this.value)"/>';
+  h += '<div style="display:flex;justify-content:space-between;margin-top:3px"><span style="font-size:9px;color:var(--dim)">$0</span><span style="font-size:9px;color:var(--dim)">$3M/mes</span></div></div>';
+  h += '</div>';
+  // Right
+  h += '<div class="card" id="bola-content">';
+  h += bolaContentHTML(dPost, excBase, bn, mesLibre, dM);
+  h += '</div>';
+  h += '</div>';
+  h += '<div class="card" style="margin-top:16px;border-left:3px solid var(--gold);padding-left:16px">';
+  h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:6px">Script para explicarlo</div>';
+  h += '<p style="font-size:13px;line-height:1.8;color:var(--dim)"><em style="color:var(--txt)">"Al pagar la deuda más cara hoy liberamos '+fm(dM.cuota)+'/mes. Ese dinero va directo a la siguiente. Cuando esa quede libre, la bola ya tiene '+fm(dM.cuota+(dd[1]?dd[1].cuota:0))+'/mes rodando hacia la siguiente."</em></p>';
+  h += '</div>';
+  el('a4').innerHTML = h;
+  window._bola_dPost = dPost;
+  window._bola_dM = dM;
+}
+
+function bolaContentHTML(dPost, excBase, bn, mesLibre, dM){
+  if(!dPost.length) return '<p style="font-size:13px;color:var(--dim)">¡Solo tienen una deuda — se paga con el capital disponible!</p>';
+  var h='';
+  h += '<div style="margin-bottom:14px;padding:10px;background:rgba(30,123,52,.08);border-radius:6px;border:1px solid rgba(30,123,52,.25)">';
+  h += '<div style="font-size:10px;color:var(--dim);margin-bottom:2px">Excedente disponible</div>';
+  h += '<div class="ser" style="font-size:22px;color:var(--gold)">'+fm(excBase)+'/mes</div></div>';
+  dPost.forEach(function(d,i){
+    var md = bn.filter(function(r){return r.obj===d.n;}).length;
+    var mi = -1;
+    for(var j=0;j<bn.length;j++){if(bn[j].obj===d.n){mi=j;break;}}
+    h += '<div style="margin-bottom:14px;padding:12px;background:rgba(255,255,255,.03);border-radius:6px">';
+    h += '<div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;color:'+d.c+';font-weight:600">'+d.n+'</span><span class="ser" style="font-size:12px;color:var(--dim)">'+fm(d.saldo)+' · '+d.tasa+'% EA</span></div>';
+    h += '<div class="bar-wrap" style="margin-bottom:5px"><div class="bar-fill" style="width:'+(mi>=0?100:50)+'%;background:'+d.c+'55"></div></div>';
+    h += '<div style="font-size:11px;color:var(--dim)">'+(mi>=0?'Mes '+(mi+1)+' · ~'+md+' meses para liquidar':'En espera')+'</div></div>';
+  });
+  h += '<div style="padding:10px 14px;background:rgba(30,123,52,.1);border-radius:6px;border:1px solid rgba(30,123,52,.28)">';
+  h += '<div style="font-size:10px;color:var(--dim);margin-bottom:2px">Libre de deuda (ex-hipoteca)</div>';
+  h += '<div class="ser" style="font-size:24px;color:var(--green)">~'+mesLibre+' meses</div>';
+  h += '<div style="font-size:11px;color:var(--dim);margin-top:2px">~'+(mesLibre/12).toFixed(1)+' años</div></div>';
+  return h;
+}
+
+function updXtra(v){
+  el('xtra-lbl').textContent = fm(v);
+  var dPost = window._bola_dPost||[];
+  var dM = window._bola_dM||{cuota:0};
+  var excBase = (dM.cuota||0) + parseFloat(v);
+  var bn = simBola(dPost, excBase);
+  var ml = bn.length>0?bn[bn.length-1].m:0;
+  el('bola-content').innerHTML = bolaContentHTML(dPost, excBase, bn, ml, dM);
+}
+
+function buildSec5(D, dd){
+  var h='';
+  h += '<h2 style="font-size:28px;margin-bottom:5px">Compra de cartera</h2>';
+  h += '<p style="color:var(--dim);margin-bottom:16px;font-size:13px">¿Conviene mover la deuda a otro banco? O ¿hago abonos a capital directamente?</p>';
+  h += '<div style="display:grid;grid-template-columns:260px 1fr;gap:16px">';
+  // Left
+  h += '<div style="display:flex;flex-direction:column;gap:12px">';
+  h += '<div class="card"><div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:8px">Perfil crediticio</div>';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">';
+  [{k:'excelente',l:'Excelente',c:'#1E7B34'},{k:'bueno',l:'Bueno',c:'#4A7FA5'},{k:'medio',l:'Medio',c:'#E8A020'},{k:'regular',l:'Regular',c:'#C0392B'}].forEach(function(p){
+    var isOn = D.perf===p.k;
+    h += '<button style="background:'+(isOn?p.c+'22':'transparent')+';border:1px solid '+(isOn?p.c:'rgba(255,255,255,.13)')+';color:'+(isOn?p.c:'var(--dim)')+';padding:5px 10px;border-radius:3px;cursor:pointer;font-family:DM Sans,sans-serif;font-size:11px" onclick="switchPerf(\''+p.k+'\')">'+p.l+'</button>';
+  });
+  h += '</div></div>';
+  h += '<div class="card"><div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:8px">Deuda a comparar</div>';
+  h += '<select class="inp" id="cc-deuda-sel" onchange="updCC()">';
+  dd.forEach(function(d,i){
+    h += '<option value="'+i+'">'+d.n+' — '+fm(d.saldo)+' al '+d.tasa+'% EA</option>';
+  });
+  h += '</select></div>';
+  h += '<div class="card" style="background:rgba(30,123,52,.05);border-color:rgba(30,123,52,.2)">';
+  h += '<div style="font-size:11px;color:var(--green);font-weight:700;margin-bottom:6px">💡 Abono a capital vs compra cartera</div>';
+  h += '<p style="font-size:11px;line-height:1.5;color:var(--dim)">Si tienes el dinero disponible hoy, un <strong style="color:var(--txt)">abono directo al capital</strong> tiene el mismo efecto — sin trámites ni costos. Regla: si puedes abonar, abona.</p></div>';
+  h += '<div class="card" style="background:rgba(232,160,32,.05);border-color:rgba(232,160,32,.2)">';
+  h += '<div style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:5px">⚠ La trampa</div>';
+  h += '<p style="font-size:11px;line-height:1.5;color:var(--dim)">Mover la deuda y volver a gastar con la original. Si hacen compra de cartera, la deuda original se cancela el mismo día.</p></div>';
+  h += '</div>';
+  // Right
+  h += '<div class="card" id="bancos-tabla">'+bancosTablaHTML(0, D.perf, dd)+'</div>';
+  h += '</div>';
+  el('a5').innerHTML = h;
+  window._dd_asesoria = dd;
+}
+
+function bancosTablaHTML(dIdx, perf, dd){
+  var dSel = dd[dIdx]||{n:'',saldo:0,tasa:0};
+  var bancos = BANCOS[perf]||[];
+  var h = '<div style="display:grid;grid-template-columns:1.4fr 60px 55px 85px 85px 90px;gap:6px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)">';
+  ['Banco','Tasa EA','Plazo','Cuota nueva','Ahorro/mes','Ahorro total'].forEach(function(x){
+    h += '<span style="font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em">'+x+'</span>';
+  });
+  h += '</div>';
+  bancos.forEach(function(b,i){
+    var tm_o=dSel.tasa/100/12, tm_n=b.t/100/12, pl=b.p;
+    if(tm_o===0||dSel.saldo===0){h+='<div style="font-size:12px;color:var(--dim);padding:6px">Ingresa una deuda para comparar</div>';return;}
+    var co=dSel.saldo*tm_o/(1-Math.pow(1+tm_o,-pl));
+    var cn=dSel.saldo*tm_n/(1-Math.pow(1+tm_n,-pl));
+    var am=co-cn, at=am*pl;
+    var best=i===0, ok=am>0;
+    h += '<div style="display:grid;grid-template-columns:1.4fr 60px 55px 85px 85px 90px;gap:6px;padding:7px 4px;border-radius:4px;background:'+(best?'rgba(30,123,52,.06)':'transparent')+';border-left:'+(best?'3px solid var(--green)':'3px solid transparent')+'">';
+    h += '<div style="display:flex;align-items:center;gap:6px"><span>'+b.l+'</span><div><div style="font-size:11px;color:'+(best?'var(--green)':'var(--txt)')+'">'+b.b+'</div>'+(best?'<span class="chip" style="background:rgba(30,123,52,.2);color:var(--green);font-size:8px">mejor</span>':'')+'</div></div>';
+    h += '<span class="ser" style="font-size:12px;color:'+(b.t<dSel.tasa?'var(--green)':'var(--red)')+'">'+b.t+'%</span>';
+    h += '<span style="font-size:11px;color:var(--dim)">'+b.p+'m</span>';
+    h += '<span class="ser" style="font-size:12px">'+fm(cn.toFixed(2))+'</span>';
+    h += '<span class="ser" style="font-size:12px;color:'+(ok?'var(--green)':'var(--red)')+'">'+( ok?'+':'')+fm(am.toFixed(2))+'</span>';
+    h += '<span class="ser" style="font-size:12px;color:'+(ok?'var(--green)':'var(--red)')+'">'+( ok?'+':'')+fm(at.toFixed(1))+'</span>';
+    h += '</div>';
+  });
+  h += '<p style="font-size:10px;color:var(--dim);margin-top:10px;padding:8px;background:rgba(74,127,165,.08);border-radius:5px">⚠ Tasas aproximadas. Pedir simulación oficial. Descontar costos de estudio del ahorro calculado.</p>';
+  return h;
+}
+
+function switchPerf(k){
+  DATA.perf = k;
+  var dIdx = parseInt(el('cc-deuda-sel').value)||0;
+  el('bancos-tabla').innerHTML = bancosTablaHTML(dIdx, k, window._dd_asesoria||DATA.deudas);
+}
+function updCC(){
+  var dIdx = parseInt(el('cc-deuda-sel').value)||0;
+  el('bancos-tabla').innerHTML = bancosTablaHTML(dIdx, DATA.perf, window._dd_asesoria||DATA.deudas);
+}
+
+
+function buildSec6(D, dd, dM){
+  var h='';
+  h += '<h2 style="font-size:28px;margin-bottom:5px">Mas opciones — lo que nadie pregunta</h2>';
+  h += '<p style="color:var(--dim);margin-bottom:18px;font-size:13px">Mas alla de la bola de nieve y la compra de cartera, hay palancas concretas que la mayoria ignora.</p>';
+
+  // CESANTIAS
+  if(D.cesantias>0){
+    h += '<div class="card" style="border-left:4px solid var(--gold);margin-bottom:14px">';
+    h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">';
+    h += '<div>';
+    h += '<div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;font-weight:700;margin-bottom:6px">Cesantias de '+D.fijo.q+' — el activo invisible</div>';
+    h += '<div style="font-size:32px;font-family:DM Serif Display,serif;color:var(--gold);margin-bottom:4px">'+fm(D.cesantias)+'</div>';
+    h += '<div style="font-size:12px;color:var(--dim);margin-bottom:12px">Acumuladas en el fondo · rendimiento actual ~8% EA</div>';
+    h += '<div style="font-size:12px;color:var(--dim);line-height:1.6">En Colombia, las cesantias pueden retirarse parcialmente para <strong style="color:var(--txt)">abono a credito de vivienda</strong> (Ley 50/90). Aplicados a la hipoteca de '+fm(dd[dd.length-1]?dd[dd.length-1].saldo:0)+', el ahorro en intereses es inmediato.</div>';
+    h += '</div>';
+    h += '<div>';
+    var intAhorro = D.cesantias * (dM.tasa/100 - 0.08);
+    h += '<div style="font-size:10px;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Comparacion de rendimiento</div>';
+    h += '<div style="padding:10px 14px;background:rgba(232,160,32,.08);border-radius:6px;margin-bottom:8px">';
+    h += '<div style="font-size:11px;color:var(--dim)">Rendimiento en el fondo</div>';
+    h += '<div style="font-size:20px;font-family:DM Serif Display,serif;color:var(--gold)">~8% EA</div>';
+    h += '</div>';
+    h += '<div style="padding:10px 14px;background:rgba(30,123,52,.08);border-radius:6px;margin-bottom:8px">';
+    h += '<div style="font-size:11px;color:var(--dim)">Si se abonan a la deuda al '+dM.tasa+'% EA</div>';
+    h += '<div style="font-size:20px;font-family:DM Serif Display,serif;color:var(--green)">'+dM.tasa+'% EA (ahorro real)</div>';
+    h += '</div>';
+    h += '<div style="padding:10px 14px;background:rgba(192,57,43,.08);border-radius:6px">';
+    h += '<div style="font-size:11px;color:var(--dim)">Costo de no moverlos</div>';
+    h += '<div style="font-size:20px;font-family:DM Serif Display,serif;color:var(--red)">'+fm((intAhorro).toFixed(1))+'/ano perdido</div>';
+    h += '</div>';
+    h += '</div></div>';
+    h += '<div style="margin-top:10px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:6px">';
+    h += '<div style="font-size:11px;color:var(--dim)">Accion concreta: Verificar con RR.HH. de '+D.fijo.q+' si aplica retiro parcial para abono a hipoteca. <strong style="color:var(--txt)">El tramite toma 1-2 semanas.</strong></div>';
+    h += '</div></div>';
+  }
+
+  // NEGOCIACION BANCO
+  h += '<div class="card" style="border-left:4px solid var(--blue);margin-bottom:14px">';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">';
+  h += '<div>';
+  h += '<div style="font-size:10px;color:var(--blue);text-transform:uppercase;letter-spacing:.07em;font-weight:700;margin-bottom:6px">Negociacion directa con el banco de la tarjeta</div>';
+  h += '<p style="font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:10px">Antes de pagar o trasladar, hay una opcion gratis que casi nadie usa: <strong style="color:var(--txt)">llamar al banco y negociar directamente</strong>. Los bancos tienen programas internos de retencion que no publicitan.</p>';
+  h += '<div style="padding:10px 14px;background:rgba(74,127,165,.08);border-radius:6px">';
+  h += '<div style="font-size:11px;color:var(--blue);font-weight:700;margin-bottom:5px">Que decir en la llamada:</div>';
+  h += '<div style="font-size:11px;color:var(--dim);line-height:1.6;font-style:italic">"Estoy considerando hacer una compra de cartera con otro banco que me ofrece el 19% EA. Antes de firmar queria ver si ustedes pueden igualar esa condicion."</div>';
+  h += '</div>';
+  h += '</div>';
+  h += '<div>';
+  h += '<div style="font-size:10px;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Que se puede pedir</div>';
+  var negItems = ["Reduccion de tasa por 6-12 meses mientras cancelan","Plan de pago especial sin intereses adicionales","Condonacion de intereses si hacen un pago grande hoy","Bloqueo preventivo de la tarjeta sin cancelarla"];
+  negItems.forEach(function(item){
+    h += '<div style="display:flex;gap:8px;margin-bottom:6px;padding:6px 10px;background:rgba(74,127,165,.06);border-radius:4px">';
+    h += '<span style="color:var(--blue);font-size:11px;flex-shrink:0">→</span>';
+    h += '<span style="font-size:11px;color:var(--dim)">'+item+'</span>';
+    h += '</div>';
+  });
+  h += '<div style="margin-top:8px;padding:8px 12px;background:rgba(30,123,52,.08);border-radius:5px">';
+  h += '<div style="font-size:11px;color:var(--green)">Costo: 20 minutos de llamada. Resultado posible: ahorro real antes de pagar un peso.</div>';
+  h += '</div>';
+  h += '</div></div></div>';
+
+  // HIPOTECA - SUBROGACION
+  var hipoteca = dd.filter(function(d){return d.tasa<15;});
+  if(hipoteca.length>0){
+    var hip = hipoteca[0];
+    h += '<div class="card" style="border-left:4px solid var(--purple)">';
+    h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">';
+    h += '<div>';
+    h += '<div style="font-size:10px;color:var(--purple);text-transform:uppercase;letter-spacing:.07em;font-weight:700;margin-bottom:6px">Hipoteca — subrogar o abonar capital</div>';
+    h += '<div style="font-size:32px;font-family:DM Serif Display,serif;color:var(--purple);margin-bottom:4px">'+fm(hip.saldo)+'</div>';
+    h += '<div style="font-size:12px;color:var(--dim);margin-bottom:10px">Saldo actual al '+hip.tasa+'% EA</div>';
+    h += '<p style="font-size:12px;color:var(--dim);line-height:1.6">La hipoteca parece intocable porque "ya se paga". Pero '+fm(hip.saldo)+' al '+hip.tasa+'% EA son <strong style="color:var(--txt)">'+fm((hip.saldo*hip.tasa/100).toFixed(1))+'/ano solo en intereses</strong>. Cualquier maniobra que baje el saldo o la tasa tiene impacto enorme.</p>';
+    h += '</div>';
+    h += '<div>';
+    h += '<div style="padding:10px 12px;background:rgba(155,89,182,.08);border-radius:6px;margin-bottom:8px">';
+    h += '<div style="font-size:11px;color:var(--purple);font-weight:700;margin-bottom:4px">A. Subrogacion hipotecaria</div>';
+    h += '<div style="font-size:11px;color:var(--dim);line-height:1.5">Mover la hipoteca a otro banco con mejor tasa. Si pasan del '+hip.tasa+'% al '+(hip.tasa-1.5).toFixed(1)+'% EA: <strong style="color:var(--green)">'+fm((hip.saldo*0.015).toFixed(1))+'/ano ahorrados</strong>.</div>';
+    h += '</div>';
+    h += '<div style="padding:10px 12px;background:rgba(155,89,182,.08);border-radius:6px">';
+    h += '<div style="font-size:11px;color:var(--purple);font-weight:700;margin-bottom:4px">B. Abono extraordinario con primas</div>';
+    h += '<div style="font-size:11px;color:var(--dim);line-height:1.5">Primas de '+D.fijo.q+' ('+fm(D.prima)+'/ano): abono de '+fm(D.prima*0.7.toFixed(1))+' a capital recorta ~3 anos del plazo.</div>';
+    h += '</div>';
+    h += '</div></div></div>';
+  }
+
+  // ESTRUCTURA INGRESOS ANDRES
+  if(D.var.malo < D.var.norm * 0.5){
+    h += '<div class="card" style="border-left:4px solid var(--orange);margin-bottom:0">';
+    h += '<div style="font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.07em;font-weight:700;margin-bottom:10px">Estructura de ingresos de '+D.var.q+' — el problema en la fuente</div>';
+    h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">';
+    var varItems = [
+      {ico:"📋",t:"Provision de impuestos",d:"Como independiente, el 25-35% de cada pago recibido debe separarse inmediatamente para obligaciones tributarias (renta, IVA si aplica, ICA). Cuenta bancaria separada solo para impuestos.",c:"var(--red)"},
+      {ico:"🔄",t:"Contratos recurrentes",d:"Transformar aunque sea 2 clientes en retainers mensuales cambia completamente la ecuacion. Un retainer de $2M con 3 clientes = $6M fijo. Mejor 'inversion' posible para las finanzas del hogar.",c:"var(--green)"},
+      {ico:"🏦",t:"Buffer de operacion",d:"3 meses del gasto fijo familiar (~"+fm((parseFloat(D.var.norm*0.8)||5)*3)+") en cuenta liquida separada. Solo para meses malos. No es el fondo de emergencia — es la amortiguador del trabajo independiente.",c:"var(--blue)"}
+    ];
+    varItems.forEach(function(item){
+      h += '<div style="padding:12px;background:rgba(255,255,255,.04);border-radius:6px;border-top:2px solid '+item.c+'">';
+      h += '<div style="font-size:18px;margin-bottom:6px">'+item.ico+'</div>';
+      h += '<div style="font-size:11px;font-weight:700;color:var(--txt);margin-bottom:5px">'+item.t+'</div>';
+      h += '<p style="font-size:10px;color:var(--dim);line-height:1.5">'+item.d+'</p>';
+      h += '</div>';
+    });
+    h += '</div></div>';
+  }
+
+  el('a6').innerHTML = h;
+}
+
+function buildSec7(D){
+  var h='';
+  h += '<h2 style="font-size:28px;margin-bottom:5px">Proteccion del patrimonio 🛡</h2>';
+  h += '<p style="color:var(--dim);margin-bottom:18px;font-size:13px">Lo que mas duele no es la deuda — es que una emergencia destruya todo lo construido. Los seguros son la red invisible.</p>';
+
+  var segurosLevel = D.seguros || 'ninguno';
+
+  // Diagnostico actual
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">';
+  h += '<div class="card">';
+  h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Diagnostico de proteccion actual</div>';
+  var coverageColor = segurosLevel==='completo'?'var(--green)':segurosLevel==='basico'?'var(--gold)':'var(--red)';
+  var coverageLabel = segurosLevel==='completo'?'Cobertura aceptable':'segurosLevel'==='basico'?'Cobertura insuficiente':'Sin proteccion real';
+  h += '<div style="font-size:22px;font-family:DM Serif Display,serif;color:'+coverageColor+';margin-bottom:6px">'+(segurosLevel==='completo'?'Cobertura aceptable':segurosLevel==='basico'?'Cobertura insuficiente':'Sin proteccion real')+'</div>';
+
+  var riesgos = [
+    {label: D.fijo.q+' fallece o queda incapacitada', riesgo: 'ALTO', c:'var(--red)', desc:'Hipoteca de '+fm(D.deudas?D.deudas.reduce(function(s,d){return s+(d.tasa<15?d.saldo:0);},0):0)+' sin ingreso fijo'},
+    {label: D.var.q+' incapacitado > 3 meses', riesgo: segurosLevel==='ninguno'?'CRITICO':'ALTO', c:'var(--red)', desc:'Sin ARL obligatoria como independiente. Sin ingreso variable = deficit inmediato'},
+    {label: 'Gasto medico no previsto', riesgo: segurosLevel==='completo'?'BAJO':'MEDIO', c:segurosLevel==='completo'?'var(--green)':'var(--gold)', desc:'Puede comerse el fondo de emergencia en semanas'},
+    {label: 'Universidad hijos sin plan', riesgo: 'MEDIO', c:'var(--gold)', desc:'Mateo: 9 anos. Antonia: 5 anos. ~9 y 13 anos para necesitarlo'}
+  ];
+  riesgos.forEach(function(r){
+    h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)">';
+    h += '<span style="font-size:11px;color:var(--dim)">' + r.label + '</span>';
+    h += '<span style="font-size:9px;font-weight:700;color:'+r.c+';background:'+r.c.replace('var(--','rgba(').replace(')',',0.12)')+';padding:2px 8px;border-radius:3px">' + r.riesgo + '</span>';
+    h += '</div>';
+  });
+  h += '</div>';
+
+  h += '<div class="card">';
+  h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Lo que necesitan revisar</div>';
+  var segurosNeeded = [
+    {ico:'👤',t:'Seguro de vida '+D.fijo.q,d:'Monto minimo recomendado: equivalente a 5-7 anos de su ingreso (~'+fm((D.fijo.v*12*6).toFixed(0))+'). Cubre la hipoteca y da tiempo.'},
+    {ico:'🏗',t:'Seguro de vida '+D.var.q+' (independiente)',d:'Critico: como independiente no tiene cobertura laboral. Seguro de incapacidad temporal es igualmente importante.'},
+    {ico:'🏥',t:'Salud complementaria',d:'El plan obligatorio (EPS) tiene limitaciones. Una poliza complementaria evita que una hospitalizacion destruya el fondo de emergencia.'},
+    {ico:'🏠',t:'Seguro del apartamento',d:'El activo mas valioso del hogar. Verificar que la cobertura este vigente y sea suficiente sobre el valor actual.'}
+  ];
+  segurosNeeded.forEach(function(s){
+    h += '<div style="display:flex;gap:10px;margin-bottom:10px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:5px">';
+    h += '<span style="font-size:18px;flex-shrink:0">'+s.ico+'</span>';
+    h += '<div><div style="font-size:11px;font-weight:700;color:var(--txt);margin-bottom:2px">'+s.t+'</div>';
+    h += '<div style="font-size:10px;color:var(--dim);line-height:1.4">'+s.d+'</div></div>';
+    h += '</div>';
+  });
+  h += '</div></div>';
+
+  // El apartamento como activo
+  var hip = D.deudas ? D.deudas.filter(function(d){return d.tasa<15;})[0] : null;
+  if(hip){
+    var valorAp = hip.saldo + 215; // approximate equity
+    var equity = valorAp - hip.saldo;
+    h += '<div class="card" style="border-top:3px solid var(--gold)">';
+    h += '<div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">El apartamento como activo activo — '+fm(equity)+'M de patrimonio neto</div>';
+    h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">';
+    [
+      {t:'Valor estimado',v:fm(valorAp),c:'var(--gold)',d:'Apartamento norte de Bogota'},
+      {t:'Deuda hipoteca',v:fm(hip.saldo),c:'var(--red)',d:'Saldo pendiente'},
+      {t:'Patrimonio neto',v:fm(equity),c:'var(--green)',d:'Equity disponible — activo real'}
+    ].forEach(function(d){
+      h += '<div style="padding:10px 12px;background:rgba(255,255,255,.04);border-radius:6px;text-align:center">';
+      h += '<div style="font-size:22px;font-family:DM Serif Display,serif;color:'+d.c+'">'+d.v+'</div>';
+      h += '<div style="font-size:10px;color:var(--dim);margin-top:3px">'+d.t+'</div>';
+      h += '<div style="font-size:9px;color:var(--muted);margin-top:2px">'+d.d+'</div>';
+      h += '</div>';
+    });
+    h += '</div>';
+    h += '<p style="font-size:12px;color:var(--dim);line-height:1.6;margin-top:10px">Este equity no es liquido — pero existe. En 20 anos al 5% de valorizacion anual, el apartamento vale ~'+fm(Math.round(valorAp*Math.pow(1.05,20)))+'M. Es parte del plan de retiro aunque no este en ningun fondo.</p>';
+    h += '</div>';
+  }
+
+  // El script
+  h += '<div style="margin-top:14px;padding:14px 18px;background:#1A1A1A;border-radius:8px;border-left:3px solid var(--gold)">';
+  h += '<div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Pregunta de coaching</div>';
+  h += '<p style="font-size:13px;color:#E8E4DC;line-height:1.8;font-style:italic">"Antes de hablar de donde invertir el siguiente peso, necesito hacerles una pregunta incomoda: si '+D.var.q+' tiene un accidente manana y no puede trabajar por un ano, cuanto tiempo aguanta esta familia con lo que tienen? Con el plan que estamos construyendo, la respuesta va a ser 5 meses. Eso no es suficiente si no tienen una red de proteccion."</p>';
+  h += '</div>';
+
+  el('a7').innerHTML = h;
+}
+
+function buildSec8(D, dM, dd, gTot, gNec, gDes, gAh, vM, ingAvg, n50, n30, n20){
+  var h='';
+  h += '<h2 style="font-size:28px;margin-bottom:5px">Presupuesto 50 / 30 / 20</h2>';
+  h += '<p style="color:var(--dim);margin-bottom:18px;font-size:13px">50% necesidades · 30% deseos (incluyendo viaje) · 20% ahorro e inversión</p>';
+  // 3 big blocks
+  h += '<div class="g3" style="margin-bottom:18px">';
+  [{l:'50% Necesidades',meta:n50,actual:gNec,c:'var(--blue)'},{l:'30% Deseos + viaje',meta:n30,actual:gDes,c:'var(--gold)'},{l:'20% Ahorro & Inversión',meta:n20,actual:Math.max(0,ingAvg-gTot)+gAh,c:'var(--green)'}].forEach(function(d){
+    var gap=d.actual-d.meta;
+    var pct=ingAvg>0?Math.min(100,(d.actual/ingAvg)*100):0;
+    var mp=ingAvg>0?(d.meta/ingAvg)*100:0;
+    var col=gap>0.5?'var(--red)':d.c;
+    h += '<div class="card" style="border-top:3px solid '+(gap>0.5?'var(--red)':d.c)+'">';
+    h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">'+d.l+'</div>';
+    h += '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><div class="ser" style="font-size:24px;color:'+col+'">'+fm(d.actual.toFixed(1))+'</div><div style="font-size:11px;color:var(--dim)">meta '+fm(d.meta.toFixed(1))+'</div></div>';
+    h += '<div class="bar-wrap" style="margin-bottom:6px;position:relative"><div class="bar-fill" style="width:'+pct+'%;background:'+col+'"></div><div style="position:absolute;top:0;left:'+mp+'%;width:2px;height:100%;background:rgba(255,255,255,.5)"></div></div>';
+    h += '<div style="font-size:10px;color:'+(gap>0.5?'#E57373':gap<-1?'var(--green)':'var(--dim)')+'">'+( gap>0.5?'⚠ '+fm(gap.toFixed(1))+' sobre la meta':gap<-1?'✓ '+fm(Math.abs(gap).toFixed(1))+' bajo la meta':'✓ En rango')+'</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  // Viaje block
+  if(D.via>0){
+    h += '<div style="margin-bottom:16px;padding:14px 18px;background:rgba(232,160,32,.07);border:1px solid rgba(232,160,32,.3);border-radius:8px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;align-items:center">';
+    h += '<div><div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:4px">✈️ Viaje anual</div><div class="ser" style="font-size:22px;color:var(--gold)">'+fm(D.via)+'</div><div style="font-size:11px;color:var(--dim)">costo total planificado</div></div>';
+    h += '<div><div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:4px">Ahorro mensual necesario</div><div class="ser" style="font-size:22px;color:var(--gold)">'+fm(vM.toFixed(2))+'</div><div style="font-size:11px;color:var(--dim)">para llegar sin tarjeta</div></div>';
+    h += '<div><div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:4px">Guardar en</div><div style="font-size:13px">Cuenta separada o CDT 180 días</div><div style="font-size:10px;color:var(--dim);margin-top:2px">No mezclarlo con gastos del mes</div></div>';
+    h += '<div style="padding:8px 12px;background:rgba(192,57,43,.1);border-radius:6px;border:1px solid rgba(192,57,43,.3)"><div style="font-size:11px;color:#E57373;font-weight:700;margin-bottom:4px">⚠ Trampa</div><div style="font-size:11px;color:var(--dim);line-height:1.5">Cargarlo a tarjeta al '+dM.tasa+'% EA cuesta '+fm((D.via*dM.tasa/100).toFixed(1))+' extra al año.</div></div>';
+    h += '</div>';
+  }
+  // 20% desglose
+  h += '<div class="g2">';
+  h += '<div class="card"><div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:14px">💰 El deseo del ahorro — ¿a dónde va el 20%?</div>';
+  [{n:'Bola de nieve',v:(dM.cuota||0.65),c:'var(--red)',d:'Atacar deudas restantes'},{n:'Fondo emergencia',v:0.5,c:'var(--blue)',d:'Hasta 6 meses completos'},{n:'✈️ Fondo viaje',v:+(vM.toFixed(2)),c:'var(--gold)',d:'Viaje sin tarjeta'},{n:'Inversión libre',v:Math.max(0.1,n20-(dM.cuota||0.65)-0.5-vM),c:'var(--green)',d:'ETFs, CDTs, FVP'}].forEach(function(item){
+    h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)">';
+    h += '<div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:'+item.c+';flex-shrink:0"></div><div><div style="font-size:12px">'+item.n+'</div><div style="font-size:10px;color:var(--dim)">'+item.d+'</div></div></div>';
+    h += '<div class="ser" style="font-size:14px;color:'+item.c+';flex-shrink:0">'+fm(item.v)+'/mes</div>';
+    h += '</div>';
+  });
+  h += '<div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,.1)"><span style="font-size:12px;color:var(--dim);font-weight:600">Total 20% disponible</span><span class="ser" style="font-size:16px;color:var(--green)">'+fm(n20.toFixed(1))+'/mes</span></div></div>';
+  h += '<div class="card" style="border:1px solid rgba(30,123,52,.25)">';
+  h += '<div style="font-size:10px;color:var(--green);text-transform:uppercase;margin-bottom:12px">🎯 Meta a 24–36 meses</div>';
+  h += '<p style="font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:12px">Sin la deuda más cara y el vehículo pagando intereses, se liberan '+fm(((dM.cuota||0)+(dd[1]?dd[1].cuota:0)).toFixed(2))+'/mes adicionales para el 20%.</p>';
+  if(D.mah>0){
+    var proyAh = D.mah*((Math.pow(1.007,120)-1)/0.007);
+    h += '<div style="padding:10px 14px;background:rgba(30,123,52,.08);border-radius:6px;margin-bottom:10px;border:1px solid rgba(30,123,52,.2)">';
+    h += '<div style="font-size:10px;color:var(--green);text-transform:uppercase;margin-bottom:4px">Meta de ahorro declarada</div>';
+    h += '<div class="ser" style="font-size:20px;color:var(--green)">'+fm(D.mah)+'/mes</div>';
+    h += '<div style="font-size:11px;color:var(--dim);margin-top:2px">En 10 años al 8% EA: <strong style="color:var(--green)">'+fm(proyAh.toFixed(1))+'</strong></div></div>';
+  }
+  h += '<div style="font-size:12px;color:var(--dim);line-height:1.8">✓ Viaje planificado y pagado de contado<br/>✓ Ahorro mensual automático activo<br/>✓ Inversión sistemática corriendo<br/>✓ Sin deudas de consumo</div></div>';
+  h += '</div>';
+  el('a8').innerHTML = h;
+}
+
+function buildSec9(){
+  var h='';
+  h += '<h2 style="font-size:28px;margin-bottom:5px">Inversiones: construyendo patrimonio 📈</h2>';
+  h += '<p style="color:var(--dim);margin-bottom:18px;font-size:13px">Qué es un ETF, cómo funciona y cuánto pueden construir.</p>';
+  // ETF explainer
+  h += '<div class="card" style="margin-bottom:16px;border-top:3px solid var(--green)">';
+  h += '<div style="font-size:10px;color:var(--green);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">¿Qué es un ETF? — La explicación simple</div>';
+  h += '<div class="g3">';
+  [{ico:'🗂',t:'Canasta de activos',d:'Un ETF contiene cientos de acciones. Al comprar una cuota, compras un pedazo de todas. Diversificación automática.'},{ico:'📉📈',t:'Sube y baja con el mercado',d:'Puede bajar 20% en un año malo pero históricamente recupera. Horizonte mínimo recomendado: 5 años.'},{ico:'💸',t:'Costo mínimo',d:'VOO cobra 0.03% anual vs 1–2% de fondos activos. En 20 años esa diferencia representa millones.'}].forEach(function(x){
+    h += '<div style="padding:12px;background:rgba(30,123,52,.06);border-radius:6px"><div style="font-size:20px;margin-bottom:6px">'+x.ico+'</div><div style="font-size:12px;font-weight:600;margin-bottom:4px">'+x.t+'</div><p style="font-size:11px;color:var(--dim);line-height:1.5">'+x.d+'</p></div>';
+  });
+  h += '</div></div>';
+  // ETF product selector
+  h += '<div style="display:grid;grid-template-columns:180px 1fr;gap:14px;margin-bottom:16px">';
+  h += '<div style="display:flex;flex-direction:column;gap:5px">';
+  ETFS.forEach(function(p,i){
+    var isOn = i===0;
+    h += '<button style="background:'+(isOn?p.c+'22':'transparent')+';border:1px solid '+(isOn?p.c:'rgba(255,255,255,.13)')+';color:'+(isOn?p.c:'var(--dim)')+';padding:8px 10px;border-radius:4px;cursor:pointer;font-family:DM Sans,sans-serif;text-align:left;width:100%" onclick="switchEtf('+i+')">';
+    h += '<div style="font-size:11px;font-weight:600">'+p.n+'</div>';
+    h += '<div style="font-size:9px;color:var(--dim);margin-top:1px">'+p.t+'</div>';
+    h += '</button>';
+  });
+  h += '</div>';
+  h += '<div class="card" id="etf-panel" style="border-left:4px solid '+ETFS[0].c+'">'+etfPanelHTML(0)+'</div>';
+  h += '</div>';
+  // Simulator
+  h += '<div class="card" style="border-top:3px solid var(--gold)">';
+  h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;margin-bottom:14px">Simulador — ¿cuánto construyen en 10 años?</div>';
+  h += '<div class="g3" style="margin-bottom:14px">';
+  [{l:'Capital inicial',k:'cap',min:1,max:50,step:1,v:5,suf:'M'},{l:'Aporte mensual',k:'ap',min:0.5,max:5,step:0.5,v:1,suf:'M/mes'},{l:'Retorno anual',k:'ta',min:4,max:12,step:0.5,v:8,suf:'% EA'}].forEach(function(d){
+    h += '<div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:12px;color:var(--dim)">'+d.l+'</span><span id="inv-'+d.k+'" class="ser" style="font-size:14px;color:var(--gold)">'+d.v+d.suf+'</span></div>';
+    h += '<input type="range" min="'+d.min+'" max="'+d.max+'" step="'+d.step+'" value="'+d.v+'" oninput="updInv(\''+d.k+'\',this.value)"/></div>';
+  });
+  h += '</div>';
+  h += '<div id="inv-chart" style="height:100px;display:flex;align-items:flex-end;gap:3px;margin-bottom:10px"></div>';
+  h += '<div id="inv-miles" class="g4"></div>';
+  h += '</div>';
+  el('a9').innerHTML = h;
+  window._inv = {cap:5,ap:1,ta:8};
+  updInv('cap',5);
+}
+
+function etfPanelHTML(i){
+  var p=ETFS[i];
+  var h='';
+  h += '<div style="display:flex;justify-content:space-between;margin-bottom:10px">';
+  h += '<div><span class="chip" style="background:'+p.c+'20;color:'+p.c+';margin-bottom:6px;display:inline-block">'+p.t+'</span><h3 style="font-size:18px">'+p.n+'</h3></div>';
+  h += '<div style="text-align:right"><div style="font-size:10px;color:var(--dim)">Retorno histórico</div><div class="ser" style="font-size:24px;color:var(--green)">'+p.r+'% EA</div></div></div>';
+  h += '<p style="font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:12px">'+p.d+'</p>';
+  h += '<div class="g2">';
+  h += '<div style="padding:7px 10px;background:rgba(255,255,255,.04);border-radius:5px"><div style="font-size:10px;color:var(--dim);margin-bottom:2px">Riesgo</div><div style="font-size:13px;color:'+(p.ri==='Bajo'?'var(--green)':p.ri.includes('Alto')?'var(--red)':'var(--gold)')+';font-weight:600">'+p.ri+'</div></div>';
+  h += '<div style="padding:7px 10px;background:rgba(255,255,255,.04);border-radius:5px"><div style="font-size:10px;color:var(--dim);margin-bottom:2px">Dónde acceder</div><div style="font-size:12px">'+p.donde+'</div></div>';
+  h += '</div>';
+  return h;
+}
+function switchEtf(i){
+  var panel=el('etf-panel'); if(!panel) return;
+  panel.innerHTML=etfPanelHTML(i);
+  panel.style.borderLeft='4px solid '+ETFS[i].c;
+  var btns=document.querySelectorAll('#a7 [onclick^="switchEtf"]');
+  btns.forEach(function(b,j){
+    b.style.background=j===i?ETFS[j].c+'22':'transparent';
+    b.style.borderColor=j===i?ETFS[j].c:'rgba(255,255,255,.13)';
+    b.style.color=j===i?ETFS[j].c:'var(--dim)';
+  });
+}
+function updInv(k,v){
+  if(!window._inv) return;
+  window._inv[k]=parseFloat(v);
+  var state=window._inv;
+  if(el('inv-cap')) el('inv-cap').textContent=state.cap+'M';
+  if(el('inv-ap'))  el('inv-ap').textContent=state.ap+'M/mes';
+  if(el('inv-ta'))  el('inv-ta').textContent=state.ta+'%';
+  var data=proyInv(state.cap,state.ap,state.ta,120);
+  var maxV=Math.max.apply(null,data.map(function(p){return p.v;}));
+  var chartEl=el('inv-chart'); if(!chartEl) return;
+  chartEl.innerHTML=data.map(function(p){
+    return '<div style="flex:1"><div style="width:100%;background:rgba(30,123,52,'+(0.3+0.7*(p.v/maxV)).toFixed(2)+');border-radius:3px 3px 0 0;height:'+Math.max(3,(p.v/maxV)*96)+'px;transition:height .5s"></div></div>';
+  }).join('');
+  var milesEl=el('inv-miles'); if(!milesEl) return;
+  milesEl.innerHTML=[{l:'Hoy',m:0},{l:'3 años',m:36},{l:'7 años',m:84},{l:'10 años',m:120}].map(function(t){
+    var p=null;
+    for(var j=0;j<data.length;j++){if(data[j].m>=t.m){p=data[j];break;}}
+    if(!p)p=data[data.length-1];
+    return '<div style="text-align:center;padding:10px;background:rgba(30,123,52,.08);border-radius:6px;border:1px solid rgba(30,123,52,.18)"><div style="font-size:10px;color:var(--dim);margin-bottom:2px">'+t.l+'</div><div class="ser" style="font-size:18px;color:var(--green)">'+fm(p.v)+'</div></div>';
+  }).join('');
+}
+
+function buildSec10(D, dd, dM){
+  var dPost=dd.slice(1);
+  var excBase=dM.cuota||0;
+  var bn=simBola(dPost,excBase);
+  var mesLibre=bn.length>0?bn[bn.length-1].m:0;
+  var h='';
+  h += '<h2 style="font-size:28px;margin-bottom:5px">El plan completo — de la deuda al patrimonio</h2>';
+  h += '<p style="color:var(--dim);margin-bottom:18px;font-size:13px">No solo pagar deuda. El camino con fechas, montos y KPIs reales.</p>';
+  h += '<div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">';
+  [{f:'HOY',c:'#4A7FA5',ico:'💬',t:'La conversación — todos con los mismos números',pts:['Abrir el estado real de las finanzas sin juicio','Decidir juntos qué hacer con el capital disponible','Fijar reunión mensual de presupuesto'],kpi:'Todos tienen visibilidad completa antes de que acabe la semana'},
+   {f:'MES 1',c:'var(--red)',ico:'✂️',t:'Liquidar '+dM.n+' + asignar '+fm(D.par),pts:['Pagar '+fm(dM.saldo)+' — elimina el '+dM.tasa+'% EA para siempre','Fondo de emergencia real: ~5 meses de gastos fijos','Buffer variable para los meses malos','Semilla de inversión activa desde el día 1'],kpi:'Cero deuda cara. Fondo emergencia real construido.'},
+   {f:'MES 2–24',c:'var(--gold)',ico:'❄️',t:'Bola de nieve + presupuesto 50/30/20',pts:[fm(dM.cuota)+'/mes liberados → atacar la siguiente deuda','Viaje planificado: '+fm((D.via/12).toFixed(2))+'/mes separado cada mes','Presupuesto escrito: necesidades, deseos, ahorro','Meta: libre de deuda vehículo en ~'+mesLibre+' meses'],kpi:'Cuota vehículo libre mes ~'+mesLibre+'. Más inversión.'},
+   {f:'DESPUÉS',c:'var(--green)',ico:'📈',t:'Inversión sistemática — los sueños con fecha',pts:['Portafolio diversificado: ETF + CDT + FVP','Metas de vida con montos y plazos concretos','Revisión semestral con coach','El patrimonio que da libertad real'],kpi:'Los sueños ya no son deseos — son números con fecha.'}]
+  .forEach(function(p){
+    h += '<div class="card" style="display:grid;grid-template-columns:70px 1fr 190px;gap:12px;border-left:4px solid '+p.c+'">';
+    h += '<div style="text-align:center"><span class="chip" style="background:rgba(255,255,255,.08);color:var(--txt);display:block;margin-bottom:6px">'+p.f+'</span><div style="font-size:20px">'+p.ico+'</div></div>';
+    h += '<div><div style="font-size:13px;font-weight:700;margin-bottom:7px">'+p.t+'</div>';
+    p.pts.forEach(function(pt){h+='<div style="display:flex;gap:7px;margin-bottom:5px"><span style="color:'+p.c+';font-size:11px;flex-shrink:0">→</span><p style="font-size:11px;color:var(--dim);line-height:1.5">'+pt+'</p></div>';});
+    h += '</div><div style="padding:8px 12px;background:rgba(255,255,255,.05);border-radius:6px;border-top:2px solid rgba(255,255,255,.12)">';
+    h += '<div style="font-size:9px;color:var(--dim);margin-bottom:3px;text-transform:uppercase">KPI</div>';
+    h += '<p style="font-size:11px;color:var(--txt);line-height:1.5">'+p.kpi+'</p></div></div>';
+  });
+  h += '</div>';
+  if(D.suenos.length>0){
+    h += '<div style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Los sueños convertidos en números</div>';
+    h += '<div style="display:grid;grid-template-columns:repeat('+Math.min(D.suenos.length,3)+',1fr);gap:10px;margin-bottom:20px">';
+    D.suenos.forEach(function(s){
+      var ap = s.costo>0&&s.anos>0 ? (s.costo/((Math.pow(1.007,s.anos*12)-1)/0.007)).toFixed(2) : 0;
+      h += '<div style="padding:14px;background:rgba(232,160,32,.05);border-radius:6px;border:1px solid rgba(232,160,32,.18)">';
+      h += '<div style="font-size:22px;margin-bottom:5px">'+s.icono+'</div>';
+      h += '<div style="font-size:11px;color:var(--dim);margin-bottom:2px">'+s.quien+'</div>';
+      h += '<div style="font-size:13px;font-weight:600;margin-bottom:8px">'+s.desc+'</div>';
+      h += '<div class="g2" style="gap:6px">';
+      h += '<div style="padding:5px 8px;background:rgba(0,0,0,.2);border-radius:4px"><div class="ser" style="font-size:15px;color:var(--gold)">'+fm(s.costo)+'</div><div style="font-size:9px;color:var(--dim)">Meta</div></div>';
+      h += '<div style="padding:5px 8px;background:rgba(0,0,0,.2);border-radius:4px"><div class="ser" style="font-size:15px;color:var(--green)">'+fm(ap)+'/mes</div><div style="font-size:9px;color:var(--dim)">en '+s.anos+' años (~7%)</div></div>';
+      h += '</div></div>';
+    });
+    h += '</div>';
+  }
+  h += '<div style="text-align:center;padding:20px 0">';
+  h += '<blockquote class="ser" style="font-size:26px;line-height:1.4;margin-bottom:10px">"El objetivo no es solo pagar deuda.<br/><em style="color:var(--gold)">Es construir el patrimonio que da libertad."</em></blockquote>';
+  h += '</div>';
+  el('a10').innerHTML = h;
+}
+
+// ───── BOOT ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function(){
+  loadDemo();
+});
+</script>
+</body>
+</html>
